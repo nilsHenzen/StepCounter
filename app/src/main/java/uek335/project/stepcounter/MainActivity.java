@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         stepCount = getStepCountFromDatabase();
 
 
+        //onClick redirect to other View
         leaderboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
+        //implement Sensor
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
             stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setCurrentDate();
     }
 
+    //save count of steps in db
     private void saveStepCountToDatabase() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -94,8 +97,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void setCurrentDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        String currentDate = sdf.format(new Date());
+        String currentDate = getCurrentDate();
 
         if (currentDateView != null) {
             currentDateView.setText("" + currentDate);
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    //update the text for the current Date
     private void updateDBStepCountView() {
         if (stepCountView != null) {
             int dbStepCount = getStepCountFromDatabase();
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    //get the current count of steps from db
     @SuppressLint("Range")
     private int getStepCountFromDatabase() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -138,12 +142,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
+    //update the display of steps
     private void updateStepCountView() {
         if (stepCountView != null) {
             stepCountView.setText("" + stepCount);
         }
     }
 
+    //check if a step is made
+    //uses accelerometer sensor and counts as step if it is moving fast
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
