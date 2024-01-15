@@ -21,6 +21,7 @@ public class DBService {
         dbHelper = new SQLiteHelper(context);
     }
 
+    //get count of todays steps from db
     @SuppressLint("Range")
     public int getStepCount() {
         String currentDate = getCurrentDate();
@@ -48,6 +49,7 @@ public class DBService {
         return count;
     }
 
+    //get informations of top 3 daily steps
     public List<StepEntry> getTop3StepCounts() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<StepEntry> top3Entries = new ArrayList<>();

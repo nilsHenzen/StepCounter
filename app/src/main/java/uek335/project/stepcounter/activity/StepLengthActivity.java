@@ -30,6 +30,7 @@ public class StepLengthActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String stepLength = valueLength.getText().toString();
 
+                //check if input field has value
                 if (!stepLength.equals("")){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("length", stepLength);

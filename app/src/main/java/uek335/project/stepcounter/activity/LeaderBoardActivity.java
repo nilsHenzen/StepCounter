@@ -36,7 +36,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
         List<StepEntry> top3Entries = dbService.getTop3StepCounts();
 
-
+        //display the top3 entries if existing
         if (top3Entries.size() >= 1) {
             StepEntry entry1 = top3Entries.get(0);
             String distance1 = DistanceCalculationService.calculateDistance(this, entry1.getCount());

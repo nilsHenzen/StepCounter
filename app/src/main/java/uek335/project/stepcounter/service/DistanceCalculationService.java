@@ -26,6 +26,7 @@ public class DistanceCalculationService extends Service {
         return binder;
     }
 
+    //calculate the distance from length & steps
     public static String calculateDistance(Context context, int countValue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefsStepLength", Context.MODE_PRIVATE);
         String lengthValue = sharedPreferences.getString("length", "0");

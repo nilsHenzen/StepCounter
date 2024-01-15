@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "stepCounterDB";
     private static final int DATABASE_VERSION = 1;
-
     public static final String TABLE_NAME = "dailySteps";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_STEP_COUNT = "stepCount";
