@@ -30,9 +30,17 @@ public class StepLengthActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String stepLength = valueLength.getText().toString();
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("length", stepLength);
-                editor.apply();
+                if (!stepLength.equals("")){
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("length", stepLength);
+                    editor.apply();
+                } else {
+                    stepLength = "65";
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("length", stepLength);
+                    editor.apply();
+                }
+
 
                 Intent intent = new Intent(StepLengthActivity.this, LeaderBoardActivity.class);
                 startActivity(intent);

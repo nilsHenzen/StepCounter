@@ -35,5 +35,6 @@ public class DistanceCalculationService extends Service {
         float distance = (length / 100 * count) / 1000;
 
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
-        return decimalFormat.format(distance);    }
+        return decimalFormat.format(distance);
+    }
 }
