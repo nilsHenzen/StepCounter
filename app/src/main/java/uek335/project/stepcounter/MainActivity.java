@@ -14,9 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private TextView stepCountView;
+    private TextView currentDateView;
     private SensorManager sensorManager;
     private Sensor stepSensor;
     private int stepCount = 0;
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Button leaderboardButton = findViewById(R.id.leaderboardButton);
         stepCountView = findViewById(R.id.dailySteps);
+        currentDateView = findViewById(R.id.currrentDate);
         leaderboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +61,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 handler.postDelayed(this, 500);
             }
         }, 500);
+        setCurrentDate();
+    }
+
+    private void setCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+
+        if (currentDateView != null) {
+            currentDateView.setText("" + currentDate);
+        }
     }
 
     @Override
