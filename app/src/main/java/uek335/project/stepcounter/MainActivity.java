@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int stepCount = 0;
     private boolean isMoving = false;
     private SQLiteHelper dbHelper;
+    private StepCountDBService stepCountDBService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         stepCountView = findViewById(R.id.dailySteps);
         currentDateView = findViewById(R.id.currrentDate);
         dbHelper = new SQLiteHelper(this);
-        stepCount = getStepCountFromDatabase();
+        stepCountDBService = new StepCountDBService(this);
+        stepCount = stepCountDBService.getStepCount();
 
 
         //onClick redirect to other View
@@ -108,37 +110,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //update the text for the current Date
     private void updateDBStepCountView() {
         if (stepCountView != null) {
-            int dbStepCount = getStepCountFromDatabase();
+            int dbStepCount = stepCountDBService.getStepCount();
             stepCountView.setText("" + dbStepCount);
         }
-    }
-
-    //get the current count of steps from db
-    @SuppressLint("Range")
-    private int getStepCountFromDatabase() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String currentDate = getCurrentDate();
-        int count = 0;
-
-        Cursor cursor = db.query(
-                SQLiteHelper.TABLE_NAME,
-                new String[]{SQLiteHelper.COLUMN_STEP_COUNT},
-                SQLiteHelper.COLUMN_DATE + " = ?",
-                new String[]{currentDate},
-                null,
-                null,
-                SQLiteHelper.COLUMN_DATE + " DESC",
-                "1"
-        );
-
-        if (cursor.moveToFirst()) {
-            count = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_STEP_COUNT));
-        }
-
-        cursor.close();
-        db.close();
-
-        return count;
     }
 
 
