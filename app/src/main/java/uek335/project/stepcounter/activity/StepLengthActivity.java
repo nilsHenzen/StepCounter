@@ -1,4 +1,4 @@
-package uek335.project.stepcounter;
+package uek335.project.stepcounter.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import uek335.project.stepcounter.R;
 
 public class StepLengthActivity extends AppCompatActivity {
 

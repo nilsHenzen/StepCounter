@@ -1,4 +1,4 @@
-package uek335.project.stepcounter;
+package uek335.project.stepcounter.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.List;
+
+import uek335.project.stepcounter.R;
+import uek335.project.stepcounter.StepEntry;
+import uek335.project.stepcounter.service.DBService;
+import uek335.project.stepcounter.service.DistanceCalculationService;
 
 public class LeaderBoardActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package uek335.project.stepcounter;
+package uek335.project.stepcounter.service;
 
 import android.app.Service;
 import android.content.Context;

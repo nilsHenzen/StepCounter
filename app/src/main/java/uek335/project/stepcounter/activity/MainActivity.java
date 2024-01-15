@@ -1,4 +1,4 @@
-package uek335.project.stepcounter;
+package uek335.project.stepcounter.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +19,10 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import uek335.project.stepcounter.R;
+import uek335.project.stepcounter.SQLiteHelper;
+import uek335.project.stepcounter.service.DBService;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 

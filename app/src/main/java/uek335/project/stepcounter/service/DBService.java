@@ -1,4 +1,4 @@
-package uek335.project.stepcounter;
+package uek335.project.stepcounter.service;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import uek335.project.stepcounter.SQLiteHelper;
+import uek335.project.stepcounter.StepEntry;
 
 public class DBService {
 
