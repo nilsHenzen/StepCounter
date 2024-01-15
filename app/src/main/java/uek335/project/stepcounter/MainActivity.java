@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     updateStepCountView();
                     saveStepCountToDatabase();
                 }
-                handler.postDelayed(this, 500);
+                handler.postDelayed(this, 250);
             }
-        }, 500);
+        }, 250);
 
         setCurrentDate();
     }
