@@ -35,7 +35,7 @@ public class StepLengthActivity extends AppCompatActivity {
                     editor.putString("length", stepLength);
                     editor.apply();
                 } else {
-                    stepLength = "65";
+                    stepLength = "70";
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("length", stepLength);
                     editor.apply();
