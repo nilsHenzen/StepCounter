@@ -2,11 +2,9 @@ package uek335.project.stepcounter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int stepCount = 0;
     private boolean isMoving = false;
     private SQLiteHelper dbHelper;
-    private StepCountDBService stepCountDBService;
+    private DBService stepCountDBService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         stepCountView = findViewById(R.id.dailySteps);
         currentDateView = findViewById(R.id.currrentDate);
         dbHelper = new SQLiteHelper(this);
-        stepCountDBService = new StepCountDBService(this);
+        stepCountDBService = new DBService(this);
         stepCount = stepCountDBService.getStepCount();
 
 
@@ -103,18 +101,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (currentDateView != null) {
             currentDateView.setText("" + currentDate);
-            updateDBStepCountView();
+            updateStepCountView();
         }
     }
-
-    //update the text for the current Date
-    private void updateDBStepCountView() {
-        if (stepCountView != null) {
-            int dbStepCount = stepCountDBService.getStepCount();
-            stepCountView.setText("" + dbStepCount);
-        }
-    }
-
 
     //update the display of steps
     private void updateStepCountView() {
