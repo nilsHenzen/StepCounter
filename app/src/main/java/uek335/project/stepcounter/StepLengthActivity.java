@@ -29,7 +29,7 @@ public class StepLengthActivity extends AppCompatActivity {
                 String stepLength = valueLength.getText().toString();
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("lenght", stepLength);
+                editor.putString("length", stepLength);
                 editor.apply();
 
                 Intent intent = new Intent(StepLengthActivity.this, LeaderBoardActivity.class);
