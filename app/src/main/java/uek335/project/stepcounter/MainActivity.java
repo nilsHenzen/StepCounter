@@ -2,8 +2,12 @@ package uek335.project.stepcounter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor stepSensor;
     private int stepCount = 0;
     private boolean isMoving = false;
+    private SQLiteHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Button leaderboardButton = findViewById(R.id.leaderboardButton);
         stepCountView = findViewById(R.id.dailySteps);
         currentDateView = findViewById(R.id.currrentDate);
+        dbHelper = new SQLiteHelper(this);
+        stepCount = getStepCountFromDatabase();
+
+
         leaderboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,11 +67,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 if (isMoving) {
                     stepCount++;
                     updateStepCountView();
+                    saveStepCountToDatabase();
                 }
                 handler.postDelayed(this, 500);
             }
         }, 500);
+
         setCurrentDate();
+    }
+
+    private void saveStepCountToDatabase() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SQLiteHelper.COLUMN_DATE, getCurrentDate());
+        values.put(SQLiteHelper.COLUMN_STEP_COUNT, stepCount);
+
+        long result = db.insertWithOnConflict(SQLiteHelper.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+        db.close();
+    }
+
+    private String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
     private void setCurrentDate() {
@@ -70,6 +99,48 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (currentDateView != null) {
             currentDateView.setText("" + currentDate);
+            updateDBStepCountView();
+        }
+    }
+
+    private void updateDBStepCountView() {
+        if (stepCountView != null) {
+            int dbStepCount = getStepCountFromDatabase();
+            stepCountView.setText("" + dbStepCount);
+        }
+    }
+
+    @SuppressLint("Range")
+    private int getStepCountFromDatabase() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String currentDate = getCurrentDate();
+        int count = 0;
+
+        Cursor cursor = db.query(
+                SQLiteHelper.TABLE_NAME,
+                new String[]{SQLiteHelper.COLUMN_STEP_COUNT},
+                SQLiteHelper.COLUMN_DATE + " = ?",
+                new String[]{currentDate},
+                null,
+                null,
+                SQLiteHelper.COLUMN_DATE + " DESC",
+                "1"
+        );
+
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_STEP_COUNT));
+        }
+
+        cursor.close();
+        db.close();
+
+        return count;
+    }
+
+
+    private void updateStepCountView() {
+        if (stepCountView != null) {
+            stepCountView.setText("" + stepCount);
         }
     }
 
@@ -83,12 +154,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             } else {
                 isMoving = false;
             }
-        }
-    }
-
-    private void updateStepCountView() {
-        if (stepCountView != null) {
-            stepCountView.setText("" + stepCount);
         }
     }
 
