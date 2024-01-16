@@ -18,6 +18,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import uek335.project.stepcounter.R;
 
 @LargeTest
@@ -39,10 +43,13 @@ public class TestCase3 {
             e.printStackTrace();
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+
         ViewInteraction textView = onView(
-                allOf(withId(R.id.currrentDate), withText("16.01.2024"),
+                allOf(withId(R.id.currrentDate), withText(currentDate),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView.check(matches(withText("16.01.2024")));
+        textView.check(matches(withText(currentDate)));
     }
 }
