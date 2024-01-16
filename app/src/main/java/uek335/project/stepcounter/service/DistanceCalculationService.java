@@ -27,10 +27,8 @@ public class DistanceCalculationService extends Service {
     }
 
     //calculate the distance from length & steps
-    public static String calculateDistance(Context context, int countValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefsStepLength", Context.MODE_PRIVATE);
-        String lengthValue = sharedPreferences.getString("length", "0");
-        float length = Float.parseFloat(lengthValue);
+    public static String calculateDistance(String stepLength, int countValue) {
+        float length = Float.parseFloat(stepLength);
 
         float count = countValue;
         float distance = (length / 100 * count) / 1000;
